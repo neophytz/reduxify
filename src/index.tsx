@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import App from './App';
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Dadda } from './views';
+import { Header } from './components/navbar';
+
 import './index.css';
+import { Loading } from './components/Loading';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
@@ -11,7 +16,15 @@ const root = createRoot(container);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <BrowserRouter>
+        <Header />
+        <Suspense fallback={<Loading />}>
+          <Routes>
+            <Route path="/" element={<App/>} />
+            <Route path='/dadda' element={<Dadda />} />
+          </Routes>
+        </Suspense>
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );

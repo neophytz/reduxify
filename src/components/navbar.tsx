@@ -9,8 +9,8 @@ export const Header = () => {
         <Link to="/">
           <span className='px-6 cursor-pointer'>Home</span>
         </Link>
-        <Link to='/dadda'>
-        <span className='px-6 cursor-pointer'>Dadda</span>
+        <Link to='/users'>
+        <span className='px-6 cursor-pointer'>Users</span>
         </Link>
       </div>
     </div>

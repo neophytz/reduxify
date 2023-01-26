@@ -1,3 +1,3 @@
 import { lazy } from "react";
 
-export const Dadda = lazy(() => import('./dadda.view'));
+export const Users = lazy(() => import('./users.view'));

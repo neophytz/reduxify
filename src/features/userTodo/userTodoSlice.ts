@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { useQuery } from 'react-query';
 import { getTodos, getUsers } from '../../services/user.service';
 import { RootState } from '../../store/store';
 import { ITodo, IUser } from '../../types';

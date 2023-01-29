@@ -1,14 +1,17 @@
 import { QueryClientConfig } from "react-query";
 
+const ONE_SEC = 1000;
+const FIVE_MINUTE = ONE_SEC * 60 * 5;
+
 export const queryClientConfig: QueryClientConfig = {
     defaultOptions: {
         queries: {
             enabled: true,
-            staleTime: 1000 * 60 * 5,
-            cacheTime: 1000 * 60 * 5,
+            staleTime: FIVE_MINUTE,
+            cacheTime: FIVE_MINUTE,
             retry: 2,
-            retryDelay: 1000,
-            refetchInterval: 1000 * 60 * 5,
+            retryDelay: ONE_SEC,
+            refetchInterval: FIVE_MINUTE,
             refetchOnWindowFocus: false,
         }
     }

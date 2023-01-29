@@ -18,8 +18,8 @@ const queryClient = new QueryClient(queryClientConfig)
 
 root.render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <Provider store={store}>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <Header />
           <Suspense fallback={<Loading />}>
@@ -31,8 +31,8 @@ root.render(
             </Routes>
           </Suspense>
         </BrowserRouter>
-      </Provider>
-    </QueryClientProvider>
+      </QueryClientProvider>
+    </Provider>
   </React.StrictMode>
 );
 

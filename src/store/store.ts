@@ -1,11 +1,13 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice';
+import gallerySlice from '../features/gallery/gallery.slice';
 import userTodoSlice from '../features/userTodo/userTodoSlice';
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
-    userTodo: userTodoSlice
+    userTodo: userTodoSlice,
+    gallery: gallerySlice,
   },
 });
 

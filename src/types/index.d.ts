@@ -34,3 +34,13 @@ export interface ITodo {
     title:     string;
     completed: boolean;
 }
+
+export interface AlbumImage {
+    albumId: number
+    id: number
+    title: string
+    url: string
+    thumbnailUrl: string
+  }
+  
+export type Status = 'idle' | 'loading' | 'failed';

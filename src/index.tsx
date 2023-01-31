@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { Users } from './views';
+import { Gallery, Users } from './views';
 import { Header } from './components/navbar';
 import { Loading } from './components/Loading';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -26,6 +26,8 @@ root.render(
             <Routes>
               <Route path="/" element={<App/>} />
               <Route path='/users' element={<Users />} />
+              <Route path='/gallery' element={<Gallery />} />
+
               {/* wild card route */}
               <Route path='*' element={<h2 className='text-center p-20 uppercase'>not found</h2>} /> 
             </Routes>

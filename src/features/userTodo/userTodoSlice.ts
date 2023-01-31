@@ -1,9 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getTodos, getUsers } from '../../services/user.service';
 import { RootState } from '../../store/store';
-import { ITodo, IUser } from '../../types';
+import { ITodo, IUser, Status } from '../../types';
 
-type Status = 'idle' | 'loading' | 'failed';
 export interface UserTodoState {
   users: IUser[];
   userStatus: Status;

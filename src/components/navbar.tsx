@@ -10,7 +10,10 @@ export const Header = () => {
           <span className='px-6 cursor-pointer'>Home</span>
         </Link>
         <Link to='/users'>
-        <span className='px-6 cursor-pointer'>Users</span>
+          <span className='px-6 cursor-pointer'>Users</span>
+        </Link>
+        <Link to='/gallery'>
+          <span className='px-6 cursor-pointer'>Gallery</span>
         </Link>
       </div>
     </div>

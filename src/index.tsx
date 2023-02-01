@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { Gallery, Users } from './views';
+import { Cart, Gallery, Products, Users } from './views';
 import { Header } from './components/navbar';
 import { Loading } from './components/Loading';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -11,6 +11,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import './index.css';
 import App from './App';
 import { queryClientConfig } from './util/constant';
+import { Toaster } from 'react-hot-toast';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
@@ -27,6 +28,8 @@ root.render(
               <Route path="/" element={<App/>} />
               <Route path='/users' element={<Users />} />
               <Route path='/gallery' element={<Gallery />} />
+              <Route path='/products' element={<Products />} />
+              <Route path='/cart' element={<Cart />} />
 
               {/* wild card route */}
               <Route path='*' element={<h2 className='text-center p-20 uppercase'>not found</h2>} /> 
@@ -34,6 +37,7 @@ root.render(
           </Suspense>
         </BrowserRouter>
       </QueryClientProvider>
+      <Toaster />
     </Provider>
   </React.StrictMode>
 );

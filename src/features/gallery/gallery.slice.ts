@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { toast } from "react-hot-toast";
 import { RootState } from "../../store/store";
 import { AlbumImage, Status } from "../../types";
 import { getImages } from "./gallery.service";
@@ -36,6 +37,19 @@ const gallerySlice = createSlice({
         .addCase(getGalleryAction.fulfilled, (state, action) => {
             state.images = action.payload;
             state.imagesStatus = "idle";
+            toast('Hello World', {
+                duration: 4000,
+                position: 'top-center',
+                icon: '🎉',
+                iconTheme: {
+                  primary: '#000',
+                  secondary: '#fff',
+                },
+                ariaProps: {
+                  role: 'status',
+                  'aria-live': 'polite',
+                },
+              });
             if(action.payload.length > 0){
                 state.currentImage = action.payload[0].id
             }

@@ -60,3 +60,6 @@ export interface Product {
     count: number
   }
   
+  export interface CartItem extends Product {
+    quantity: number
+  }

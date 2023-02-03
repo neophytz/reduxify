@@ -1,11 +1,17 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { toast } from "react-hot-toast";
-import { getProducts } from "../services/product.service";
-import { Product } from "../types";
+import { RootState } from "../store/store";
+import { CartItem, Product } from "../types";
+
+type StateCartItem = {
+    id: number,
+    quantity: number
+}
 
 export interface ProductsState {
     products: Product[],
     categories: string[],
+    cart: StateCartItem[],
     // filter: {
     //     categories: string[],
     //     rating: {
@@ -23,6 +29,7 @@ export interface ProductsState {
 const initialState : ProductsState = {
     categories: [],
     products: [],
+    cart: []
 }
 
 /*------------------------ async action ------------------------ */
@@ -41,7 +48,46 @@ const productsSlice = createSlice({
             const uniq = Object();
             products.forEach(el => uniq[el.category] = 1);
             state.categories = Object.keys(uniq);
-            toast('product set done.')
+            toast.success("Successfully loaded products and saved in store", {className: 'p-4', duration: 2000})
+        },
+        addCartItem: (state, action: PayloadAction<number>) => {
+            const id = action.payload;
+            const itemIdx = state.products.findIndex(el => el.id === id);
+            // if item does not exist, it return undefined.
+            if(itemIdx === -1) {
+                toast.error("Item does not exist, please add correct item.");
+                return
+            }
+
+            // if the item does not exist, add it.
+            // if exist, increment the quantity!
+
+            let _cartItemIndex = state.cart.findIndex(item => item.id === id);
+            if (_cartItemIndex === -1) { // if the item does not exist.
+                const _cartItem: StateCartItem = {
+                    id: id,
+                    quantity: 1
+                }
+                state.cart.push(_cartItem)
+            } else {
+                state.cart[_cartItemIndex].quantity += 1;
+            }
+            const name = state.products[itemIdx].title;
+            toast.success(`'${name}' added to your cart.`)
+        },
+        removeCartItem: (state, action: PayloadAction<number>) => {
+            const productId = action.payload;
+            const idx = state.cart.findIndex(item => item.id === productId);
+            if(idx !== -1){
+                if(state.cart[idx].quantity === 1) {
+                    state.cart.splice(idx, 1);
+                } else {
+                    state.cart[idx].quantity -= 1;
+                }
+                toast.success("Item removed from cart, successfully")
+            } else {
+                toast.error("Item does not exist in cart, What the fuck is happending!!");
+            }
         }
     },
     // extraReducers: (builder) => {
@@ -80,6 +126,31 @@ const productsSlice = createSlice({
     // }
 })
 
-export const { setProducts } = productsSlice.actions;
+export const { setProducts, removeCartItem, addCartItem } = productsSlice.actions;
+
+/*--------- selection ----------*/
+export const productCategories = (store: RootState) => store.product.categories;
+export const products = (store: RootState) => store.product.products;
+export const cartItems = (state: RootState) => {
+    // item list - cart;
+    // original items - products;
+    const cartIds = state.product.cart, products = state.product.products;
+    const cartItem: CartItem[] = [];
+    
+    cartIds.forEach(item => {
+        cartItem.push({
+            ...products.find(product => product.id === item.id) as Product,
+            quantity: item.quantity
+        })
+    })
+
+    // const val = cartIds.map(item => (
+    //     {
+    //         ...products.find(el => el.id === item.id) as Product,
+    //         quantity: item.quantity
+    //     }
+    // ))
+    return cartItem;
+}
 
 export default productsSlice.reducer;

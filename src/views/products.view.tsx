@@ -1,20 +1,12 @@
-import React, { FC, memo } from 'react'
+import React, { FC, memo, } from 'react'
 import { useQuery } from 'react-query';
 import { Cart, HalfStar, Star } from '../components/icons';
 import { Loading } from '../components/Loading';
-import { setProducts } from '../features/products.slice';
+import { addCartItem, productCategories, setProducts } from '../features/products.slice';
 import { getProducts } from '../services/product.service';
-import { useAppDispatch } from '../store/hooks';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { bg } from '../util/constant';
 
-
-const bg = (image: string) => (
-  {
-    backgroundImage: `url(${image})`, 
-    backgroundSize: 'contain', 
-    backgroundRepeat: 'no-repeat', 
-    backgroundPosition: 'center'
-  }
-)
 
 const truncate = (str: string, len: number = 200): string => {
   return `${str.substring(0, len)}${str.length > len ? '...' : ''}`
@@ -39,14 +31,37 @@ const Rating: FC<{value: number}> = ({value}) => {
 
 const Products = () => {
   const dispatch = useAppDispatch()
+  const catergories = useAppSelector(productCategories);
+
   const { data, isLoading } = useQuery('products', getProducts, { // caching!
     onSuccess: (val) => dispatch(setProducts(val)), // state management.
   })
 
+  // useEffect(() => {
+  //   const uniq = Object();
+  //   data?.forEach(el => uniq[el.category] = 1);
+  //   console.log(Object.keys(uniq));
+  // }, [data])
+
   if(isLoading) return <Loading />
 
   return (
-    <section className={`container mx-auto py-5 flex justify-between`}>
+    <section className={`container mx-auto py-5`}>
+      <div className='p-4 my-3 rounded bg-gray-800 sticky top-0 z-10 text-white'>
+        <div className='flex items-center justify-between'>
+          <h3 className='text-2xl font-semibold'>Products</h3>
+          <div className='flex'>
+            {
+              catergories.map(category => (
+                <div key={category} className='bg-gray-50 mx-3 text-gray-800 p-2 rounded border-gray-100'>
+                  <input type="checkbox"  className='mr-3'/>
+                  {category}
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
       <div className='grid grid-cols-1 md:grid-col-3 lg:grid-cols-4 sm:grid-cols-2 gap-10'>
         {
           data?.map(product => (
@@ -62,7 +77,7 @@ const Products = () => {
                   </div>
                 </div>
               </div>
-              <button className='bg-blue-500 rounded absolute top-0 right-0 text-white flex items-center justify-center h-[50px] w-[50px]'>
+              <button type='button' onClick={() => dispatch(addCartItem(product.id))} className='bg-blue-500 hover:bg-blue-600 transition ease-in duration-150 rounded absolute top-0 right-0 text-white flex items-center justify-center h-[50px] w-[50px]'>
                 <Cart />
               </button>
             </div>

@@ -37,7 +37,9 @@ root.render(
           </Suspense>
         </BrowserRouter>
       </QueryClientProvider>
-      <Toaster />
+      <Toaster toastOptions={{
+          duration: 2000
+      }}/>
     </Provider>
   </React.StrictMode>
 );

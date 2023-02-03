@@ -16,3 +16,13 @@ export const queryClientConfig: QueryClientConfig = {
         }
     }
 }
+
+export const bg = (image: string) => (
+    {
+      backgroundImage: `url(${image})`, 
+      backgroundSize: 'contain', 
+      backgroundRepeat: 'no-repeat', 
+      backgroundPosition: 'center'
+    }
+  )
+  

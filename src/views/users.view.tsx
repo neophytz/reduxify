@@ -4,11 +4,12 @@ import { useSelector } from 'react-redux';
 import { Loading } from '../components/Loading';
 import { getTodosAysnc, getUserAsync, selectTodos, selectUsers, selectUserStatus } from '../features/userTodo/userTodoSlice';
 import { getTodos, getUsers } from '../services/user.service';
-import { useAppDispatch } from '../store/hooks';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 
 const Users = () => {
   // const users = useQuery('getUsers', getUsers).data;
   const todos = useSelector(selectTodos)
+  // const categories = useAppSelector(productCategories);
   const users = useSelector(selectUsers)
   const userStatus = useSelector(selectUserStatus)
   const dispatch = useAppDispatch();
@@ -29,6 +30,8 @@ const Users = () => {
   if (userStatus === 'loading') {
     return <Loading />
   }
+
+  // console.log(categories)
 
   return (
     <div className='mx-auto container py-5'>
